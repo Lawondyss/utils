@@ -31,7 +31,12 @@ Assert::exception(function() {
 
 Assert::exception(function() {
 	Image::fromFile('images/logo.tiff');
-}, 'Nette\Utils\UnknownImageFileException', "Unknown type of file 'images/logo.tiff'.");
+}, 'Nette\Utils\UnknownImageFileException', "Unknown type of file 'images/logo.tiff'. Mime: image/tiff");
+
+
+Assert::exception(function() {
+	Image::fromFile('images/file.xml');
+}, 'Nette\Utils\UnknownImageFileException', "Unknown type of file 'images/file.xml'.");
 
 
 Assert::exception(function() {

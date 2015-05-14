@@ -156,7 +156,12 @@ class Image extends Nette\Object
 		$format = $info[2];
 
 		if (!isset($funcs[$format])) {
-			throw new UnknownImageFileException(is_file($file) ? "Unknown type of file '$file'." : "File '$file' not found.");
+			if (!is_file($file)) {
+				$message = "File '$file' not found.";
+			} else {
+				$message = "Unknown type of file '$file'." . (isset($info['mime']) ? ' Mime: ' . $info['mime'] : '');
+			}
+			throw new UnknownImageFileException($message);
 		}
 		return new static(Callback::invokeSafe($funcs[$format], array($file), function($message) {
 			throw new ImageException($message);
